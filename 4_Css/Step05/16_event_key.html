@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>event</title>
+ <script>
+  // 페이지가 로드되면 실행되는 함수
+  window.onload = () => {
+    // 'txt'라는 ID를 가진 텍스트 입력 요소를 선택
+    let txt = document.querySelector("#txt");
+    // 'area'라는 ID를 가진 DIV 요소를 선택
+    let area = document.querySelector("#area");
+    // 'btn'이라는 ID를 가진 버튼 요소를 선택
+    let btn = document.querySelector('#btn');
+
+    // 텍스트 입력 요소에서 키가 눌리면 실행되는 함수
+    txt.onkeydown = (e) => {
+      // 콘솔에 '키보드 키 누름'이라는 메시지를 출력
+      console.log('키보드 키 누름');
+
+      btn.onclick = () => {
+
+      let content = '<h2>${txt.value}<h2>';
+        area.innerHTML += content;
+        }
+    };
+  };
+ </script>
+</head>
+<body>
+ <!-- 텍스트 입력 필드 -->
+ <input type="text" id="txt">
+ <!-- 추가 버튼 -->
+ <button id="btn">추가</button>
+ <!-- 추가된 내용을 표시할 DIV 요소 -->
+ <div id="area"></div>
+</body>
+</html>

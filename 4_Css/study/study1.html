@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>달력</title>
+    <style>
+        /* style.css 내용 시작 */
+        .calendar-container {
+            width: 350px;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .calendar-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .calendar-header button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #month-year {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .weekdays, .dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); /* 7개의 열 */
+            text-align: center;
+        }
+
+        .weekdays div {
+            padding: 10px 0;
+            font-weight: bold;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* 일요일 (첫 번째 열) */
+        .weekdays div:first-child {
+            color: red;
+        }
+        /* 토요일 (마지막 열) */
+        .weekdays div:last-child {
+            color: blue;
+        }
+
+        .dates {
+            padding: 5px;
+        }
+
+        .dates div {
+            padding: 10px 0;
+            cursor: pointer;
+            transition: background-color 0.1s;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px; /* 날짜 셀 높이 고정 */
+        }
+
+        .dates div:hover {
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+
+        .dates .today {
+            background-color: #007bff;
+            color: white;
+            border-radius: 20%;
+            font-weight: bold;
+        }
+        
+        .dates .today:hover {
+            background-color: #0056b3;
+        }
+        /* style.css 내용 끝 */
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prev-month">&lt;</button>
+            <div id="month-year"></div> <button id="next-month">&gt;</button>
+        </div>
+        <div class="calendar-body">
+            <div class="weekdays">
+                <div>일</div>
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div>토</div>
+            </div>
+            <div class="dates" id="dates">
+                </div>
+        </div>
+    </div>
+    
+    <script>
+        /* script.js 내용 시작 */
+        let date = new Date(); // 현재 날짜를 저장하는 Date 객체
+
+        const renderCalendar = () => {
+            const viewYear = date.getFullYear();
+            const viewMonth = date.getMonth();
+
+            // 1. 년/월 표시 업데이트
+            document.getElementById('month-year').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+
+            // 2. 이번 달의 첫 날(요일)과 마지막 날(날짜) 계산
+            const firstDayIndex = new Date(viewYear, viewMonth, 1).getDay(); // 0(일) ~ 6(토)
+            const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+            const today = new Date(); // 오늘 날짜
+
+            let datesHtml = '';
+
+            // 3. 이전 달의 공백 채우기 (해당 월 1일 전까지의 빈칸)
+            for (let i = 0; i < firstDayIndex; i++) {
+                datesHtml += '<div></div>';
+            }
+
+            // 4. 이번 달 날짜 채우기
+            for (let i = 1; i <= lastDate; i++) {
+                const isToday = today.getFullYear() === viewYear && 
+                                today.getMonth() === viewMonth && 
+                                today.getDate() === i;
+                
+                let dayClass = '';
+                if (isToday) {
+                    dayClass = 'today';
+                } else {
+                    // 주말 색상 처리를 위해 요일 계산 (i번째 날짜의 요일)
+                    const dayOfWeek = new Date(viewYear, viewMonth, i).getDay();
+                    if (dayOfWeek === 0) { // 일요일
+                        dayClass += 'sunday';
+                    } else if (dayOfWeek === 6) { // 토요일
+                        dayClass += 'saturday';
+                    }
+                }
+                
+                // 날짜 클릭 이벤트 추가 (예시)
+                datesHtml += `<div class="${dayClass}" onclick="alert('${viewYear}년 ${viewMonth + 1}월 ${i}일 선택')">${i}</div>`;
+            }
+
+            // 5. 달력에 날짜 삽입
+            document.getElementById('dates').innerHTML = datesHtml;
+        };
+
+        // 이전 달로 이동 버튼 이벤트 리스너
+        document.getElementById('prev-month').addEventListener('click', () => {
+            date.setMonth(date.getMonth() - 1);
+            renderCalendar();
+        });
+
+        // 다음 달로 이동 버튼 이벤트 리스너
+        document.getElementById('next-month').addEventListener('click', () => {
+            date.setMonth(date.getMonth() + 1);
+            renderCalendar();
+        });
+
+        // 달력 초기 렌더링
+        renderCalendar();
+        /* script.js 내용 끝 */
+    </script>
+</body>
+</html>

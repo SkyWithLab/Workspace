@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event</title>
+    <script>
+        window.onload = () => {
+          document.querySelector('#frm').onsubmit = () => {
+            alert('submit 이벤트 발생');
+            return false;
+          };
+        };
+        document.querySelector('a').onclick = (e) => {
+            e.preventDefault();
+        };
+        document.write(new Date().toLocaleString());
+        
+        
+    </script>
+</head>
+<body>
+    <form action="" id="frm" method="get">
+        <input type="text" id="id" name="id"><br>
+        <input type="password" id="pass" name="pass"><br>
+        <button>로그인</button>
+    </form>
+</body>
+</html>

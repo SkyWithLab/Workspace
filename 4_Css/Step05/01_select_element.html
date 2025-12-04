@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>select element</title>
+    
+    <style>
+        p{
+            background-color: red;
+        }
+    </style>
+    
+</head> 
+<body>
+    
+    <input type="text" id="txt" value="기본값"><button>검색</button>
+    <hr>
+    <input type="text" name="t1" value="A"><br>
+    <input type="text" name="t2" value="B" readonly><br>
+    <input type="text" name="t3" value="C"><br>
+    <input type="text" name="t4" value="D"><br>
+
+    <p>1</p>
+    <p>2</p>
+    <p><b>3</b></p>
+    <p>4</p>
+    <p>5</p>
+    <h1>제목 태그</h1>
+    <script>
+       let txt = document.getElementById('txt'); // 하나의 요소만 반환
+       console.log(txt);
+       // 태그 선택 후 속성 값 접근 방법
+       console.log(txt);
+       txt.type = 'password';
+       txt = document.querySelector("input[name=t2]");
+       console.log(txt.readOnly);
+       txt.readOnly = false;
+       txt.style.backgroundColor = '#0000FF';
+       
+       //input tag 전체 선택
+
+       let input = document.querySelectorAll('input');
+       console.log(input);
+       input.forEach => () {
+        console.log() 
+       }
+       </script>
+
+</body>
+</html>
